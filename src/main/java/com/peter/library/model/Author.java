@@ -4,25 +4,23 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "AUTHOR")
-@XmlRootElement(name="author")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="ID", updatable = false, nullable = false)
-    @XmlElement
     private int id;
 
     @Column(name="AUTHOR")
     @XmlElement
     private String author;
 
+    @XmlElement
     @ManyToMany(mappedBy = "author")
     private List<Book> bookList = new ArrayList<>();
 

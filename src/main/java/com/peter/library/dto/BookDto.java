@@ -4,8 +4,8 @@ import java.util.List;
 
 public class BookDto extends BaseDto {
     private String category;
-    private String title;
     private String lang;
+    private String title;
     private String year;
     private String price;
     private List<AuthorDto> authors;
@@ -18,20 +18,20 @@ public class BookDto extends BaseDto {
         this.category = category;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getLang() {
         return lang;
     }
 
     public void setLang(String lang) {
         this.lang = lang;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getYear() {

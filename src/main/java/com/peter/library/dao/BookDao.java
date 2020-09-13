@@ -79,4 +79,8 @@ public class BookDao {
     public Book findById(int id) {
         return bookRepo.findBookById(id);
     }
+
+    public Book findBookByCategory(String category) {
+        return bookRepo.findBookByCategory(category);
+    }
 }

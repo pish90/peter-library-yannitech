@@ -1,19 +1,20 @@
 package com.peter.library.model;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "BOOK")
-@XmlRootElement(name="book")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="ID", updatable = false, nullable = false)
-    @XmlElement
     private int id;
 
     @Column(name="CATEGORY")
@@ -36,11 +37,12 @@ public class Book {
     @XmlElement
     private String price;
 
+    @XmlElement
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "BOOK_AUTHOR",
-            joinColumns = { @JoinColumn(name = "book_id")},
-            inverseJoinColumns = { @JoinColumn(name = "author_id")}
+            joinColumns = { @JoinColumn(name = "fk_book")},
+            inverseJoinColumns = { @JoinColumn(name = "fk_author")}
             )
     private List<Author> author = new ArrayList<>();
 

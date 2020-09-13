@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookRepo extends CrudRepository<Book, Integer> {
-    public Book findBookById(int id);
+    Book findBookById(int id);
+
+    Book findBookByCategory(String category);
 }

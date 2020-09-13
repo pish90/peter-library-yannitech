@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthorRepo extends CrudRepository<Author, Integer> {
-    public Author findAuthorById(int id);
+    Author findAuthorById(int id);
 }

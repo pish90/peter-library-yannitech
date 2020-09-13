@@ -2,9 +2,12 @@ package com.peter.library.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.peter.library.dao.AuthorDao;
 import com.peter.library.dao.BookDao;
+import com.peter.library.dto.AuthorDto;
 import com.peter.library.dto.BookDto;
 import com.peter.library.dto.ResponseDto;
+import com.peter.library.model.Author;
 import com.peter.library.model.Book;
 import com.peter.library.service.BookService;
 import org.dozer.DozerBeanMapper;
@@ -20,12 +23,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
+    private AuthorDao authorDao;
     private BookDao bookDao;
 
     private DozerBeanMapper beanMapper;
     private XmlMapper xmlMapper;
 
-    public BookServiceImpl(BookDao bookDao) {
+    public BookServiceImpl(AuthorDao authorDao, BookDao bookDao) {
+        this.authorDao = authorDao;
         this.bookDao = bookDao;
 
         beanMapper = new DozerBeanMapper();
@@ -104,13 +109,23 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getBookList() {
+        List<AuthorDto> authorDtoList = new ArrayList<>();
         List<BookDto> bookDtoList = new ArrayList<>();
+        AuthorDto authorDto;
         BookDto bookDto;
 
         try {
             List<Book> bookList = bookDao.findAllBooks();
             for (Book book : bookList) {
                 bookDto = beanMapper.map(book, BookDto.class);
+
+                // get author details
+                List<Author> authorList = authorDao.findAllAuthors();
+                for (Author author : authorList) {
+                    authorDto = beanMapper.map(author, AuthorDto.class);
+                    authorDtoList.add(authorDto);
+                    bookDto.setAuthors(authorDtoList);
+                }
                 bookDtoList.add(bookDto);
             }
         } catch (Exception e) {
